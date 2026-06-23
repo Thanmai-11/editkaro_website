@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About Us — EditKaro.in</title>
+<meta name="description" content="Learn about EditKaro.in — our story, mission, values, and the team of editors behind the work." />
+<link rel="stylesheet" href="../css/style.css" />
+<style>
+/* ── PAGE HERO ─────────────────────────────────────── */
+.page-hero {
+  padding: 140px 40px 60px;
+  text-align: center; position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,45,120,.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero h1 { font-family: var(--ff-display); font-size: clamp(56px,9vw,120px); line-height: .92; position: relative; }
+.page-hero p { color: var(--silver); font-size: 17px; max-width: 500px; margin: 20px auto 0; position: relative; }
+
+/* ── MISSION / VISION ──────────────────────────────── */
+.mv-section { padding: 80px 40px; }
+.mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 48px; }
+.mv-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 40px; position: relative; overflow: hidden;
+}
+.mv-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--magenta), var(--magenta-dim));
+}
+.mv-eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--magenta); margin-bottom: 12px; }
+.mv-card h3 { font-family: var(--ff-display); font-size: 36px; margin-bottom: 16px; }
+.mv-card p { color: var(--silver); font-size: 15px; line-height: 1.75; }
+
+/* ── VALUES ────────────────────────────────────────── */
+.values-section { padding: 80px 40px; background: var(--charcoal); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.values-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 24px; margin-top: 48px; }
+.value-card { padding: 28px; }
+.value-icon { font-size: 32px; margin-bottom: 16px; }
+.value-title { font-family: var(--ff-display); font-size: 22px; color: var(--white); margin-bottom: 8px; }
+.value-desc { font-size: 14px; color: var(--silver); line-height: 1.7; }
+
+/* ── STORY ─────────────────────────────────────────── */
+.story-section { padding: 80px 40px; }
+.story-inner { max-width: 720px; margin: 0 auto; }
+.story-inner h2 { font-family: var(--ff-display); font-size: clamp(36px,5vw,60px); margin-bottom: 32px; }
+.story-inner p { color: var(--silver); font-size: 16px; line-height: 1.85; margin-bottom: 24px; }
+.story-inner p strong { color: var(--white); font-weight: 600; }
+.story-stat-row { display: flex; gap: 40px; flex-wrap: wrap; margin: 40px 0; padding: 32px; background: var(--card-bg); border-radius: 8px; border: 1px solid var(--border); }
+.story-stat .stat-num { font-family: var(--ff-display); font-size: 40px; color: var(--white); line-height: 1; }
+.story-stat .stat-num span { color: var(--magenta); }
+.story-stat .stat-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--silver); margin-top: 4px; }
+
+/* ── TEAM ──────────────────────────────────────────── */
+.team-section { padding: 80px 40px; background: var(--charcoal); border-top: 1px solid var(--border); }
+.team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 24px; margin-top: 48px; }
+.team-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; transition: transform .25s, box-shadow .25s;
+}
+.team-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(255,45,120,.2); }
+.team-avatar { width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--charcoal); }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.3); transition: filter .3s; }
+.team-card:hover .team-avatar img { filter: grayscale(0); }
+.team-info { padding: 20px; }
+.team-name { font-family: var(--ff-display); font-size: 22px; color: var(--white); margin-bottom: 4px; }
+.team-role { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--magenta); margin-bottom: 10px; }
+.team-bio { font-size: 13px; color: var(--silver); line-height: 1.6; }
+
+/* ── CTA ───────────────────────────────────────────── */
+.cta-mini { padding: 80px 40px; text-align: center; }
+.cta-mini h2 { font-family: var(--ff-display); font-size: clamp(40px,6vw,80px); margin-bottom: 16px; }
+.cta-mini p { color: var(--silver); font-size: 16px; max-width: 440px; margin: 0 auto 32px; }
+
+@media (max-width: 900px) {
+  .mv-grid { grid-template-columns: 1fr; }
+  .page-hero, .mv-section, .values-section, .story-section, .team-section, .cta-mini { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="../index.html">Edit<span class="accent">Karo</span><span style="color:var(--silver);font-size:20px">.in</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="../index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Work With Us</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <p class="section-label">Our Story</p>
+  <h1>Built by<br><span style="color:var(--magenta)">Editors.</span></h1>
+  <p>We started as a two-person team obsessed with great cuts. Today we're a full studio obsessed with your growth.</p>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section"><div class="marquee-track" id="marquee"></div></div>
+
+<!-- MISSION / VISION -->
+<section class="mv-section reveal">
+  <p class="section-label">What Drives Us</p>
+  <h2 class="section-title">Mission &amp;<br>Vision</h2>
+  <div class="mv-grid">
+    <div class="mv-card">
+      <p class="mv-eyebrow">Our Mission</p>
+      <h3>Edit with Intent.</h3>
+      <p>We exist to bridge the gap between raw footage and viral content — giving every creator, brand, and business the production value they deserve, delivered at internet speed. Every frame we touch has a purpose: keep the viewer watching, and move them to act.</p>
+    </div>
+    <div class="mv-card">
+      <p class="mv-eyebrow">Our Vision</p>
+      <h3>India's Fastest Creative Studio.</h3>
+      <p>We're building the most trusted video editing studio for the creator economy in India — where quality, speed, and deep subject-matter expertise coexist under one roof. By 2027 we aim to have edited content for 500+ active creators and brands across every major platform.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section reveal">
+  <p class="section-label">What We Stand For</p>
+  <h2 class="section-title">Our Values</h2>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">⚡</div>
+      <div class="value-title">Speed Without Compromise</div>
+      <div class="value-desc">48-hour standard turnaround. We move fast because the algorithm doesn't wait — but we never sacrifice quality to hit a deadline.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🎯</div>
+      <div class="value-title">Results Over Aesthetics</div>
+      <div class="value-desc">Beautiful is only half the job. Every edit is designed around a real objective — views, conversions, watch time, or brand recall.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🔁</div>
+      <div class="value-title">Radical Transparency</div>
+      <div class="value-desc">Clear briefs, honest timelines, upfront pricing. We don't surprise clients — except with how good the final cut looks.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🌱</div>
+      <div class="value-title">Long-Term Thinking</div>
+      <div class="value-desc">We're not here for one viral video. We want to be the editing partner you come back to as your channel, brand, or business grows.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story-section reveal">
+  <div class="story-inner">
+    <h2>How We Got Here.</h2>
+    <p>EditKaro.in was founded in 2022 by two college friends who had spent weekends making football edits and AMVs for fun. When those edits started getting thousands of views, brands came knocking — and a business was born.</p>
+    <p>What started as a bedroom operation with a laptop and a cracked copy of Premiere Pro is now a <strong>full-service creative studio</strong> with a team of specialist editors covering every content vertical.</p>
+    <p>We've edited product launches that broke ₹10 crore in revenue in their first week, gaming montages with 5M+ views, and wedding films that have made people cry on three continents. The common thread: <strong>every project gets our full attention</strong>, regardless of budget or brand size.</p>
+    <div class="story-stat-row">
+      <div class="story-stat"><div class="stat-num">500<span>+</span></div><div class="stat-label">Videos Delivered</div></div>
+      <div class="story-stat"><div class="stat-num">120<span>+</span></div><div class="stat-label">Happy Clients</div></div>
+      <div class="story-stat"><div class="stat-num">9<span>+</span></div><div class="stat-label">Content Verticals</div></div>
+      <div class="story-stat"><div class="stat-num">48<span>h</span></div><div class="stat-label">Avg Turnaround</div></div>
+    </div>
+    <p>Today we work with D2C brands, gaming creators, football pages, documentary filmmakers, and everyone in between. If it plays on a screen, we can make it better.</p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section reveal">
+  <p class="section-label">The People Behind the Pixels</p>
+  <h2 class="section-title">Meet the Team</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team1/400/400" alt="Aryan Kapoor" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Aryan Kapoor</div>
+        <div class="team-role">Co-Founder &amp; Creative Director</div>
+        <div class="team-bio">Aryan leads the creative vision at EditKaro. Former YouTube editor with 8M+ views across personal projects. Specialises in long-form storytelling and cinematic grades.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team2/400/400" alt="Meera Joshi" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Meera Joshi</div>
+        <div class="team-role">Co-Founder &amp; Head of Operations</div>
+        <div class="team-bio">Meera keeps the studio running — client briefs, timelines, and quality control. She's the reason your video ships on time, every time.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team3/400/400" alt="Rohan Desai" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Rohan Desai</div>
+        <div class="team-role">Senior Editor — Short Form</div>
+        <div class="team-bio">Rohan is our Reels specialist. His edits regularly hit 500K+ views. When he's not cutting content he's studying viral trends so you don't have to.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team4/400/400" alt="Priya Nair" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Priya Nair</div>
+        <div class="team-role">Motion Designer</div>
+        <div class="team-bio">Priya handles all motion graphics, animated titles, and lower-thirds. She's the person who makes your thumbnails and title cards look like they cost ten times more than they did.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team5/400/400" alt="Kabir Singh" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Kabir Singh</div>
+        <div class="team-role">Gaming &amp; Sports Editor</div>
+        <div class="team-bio">Kabir eats Valorant and football clips for breakfast. His montages are tuned for maximum retention with split-second timing and immaculate sound design.</div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-avatar"><img src="https://picsum.photos/seed/team6/400/400" alt="Isha Mehta" loading="lazy" /></div>
+      <div class="team-info">
+        <div class="team-name">Isha Mehta</div>
+        <div class="team-role">Color Grading Specialist</div>
+        <div class="team-bio">Isha trained under a Bollywood DIT and brings that cinematic sensibility to every grade — from UGC ads that need to feel raw, to wedding films that need to feel like a memory.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-mini reveal">
+  <h2>Ready to Work<br><span style="color:var(--magenta)">With Us?</span></h2>
+  <p>Whether you're a creator just starting out or a brand scaling fast, we'd love to be the studio behind your content.</p>
+  <a href="contact.html" class="btn-primary">Start a Project &rarr;</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="../index.html">Edit<span class="accent">Karo</span>.in</a>
+  <p class="footer-copy">&copy; 2026 EditKaro.in &middot; All rights reserved</p>
+  <div class="footer-links">
+    <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+<script>
+  buildMarquee('marquee', ['OUR STORY','MISSION','VISION','THE TEAM','OUR VALUES','BUILT IN INDIA','EDITED GLOBALLY','FAST DELIVERY','QUALITY FIRST']);
+</script>
+</body>
+</html>

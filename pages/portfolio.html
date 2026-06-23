@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio — EditKaro.in</title>
+<meta name="description" content="Browse EditKaro.in's video portfolio: Short Form, Long Form, Gaming, Football Edits, eCommerce Ads, Documentary, Color Grading, Anime, and Ads." />
+<link rel="stylesheet" href="../css/style.css" />
+<style>
+/* ── PAGE HERO ─────────────────────────────────────── */
+.page-hero {
+  padding: 140px 40px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(255,45,120,.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+.page-hero h1 { font-family: var(--ff-display); font-size: clamp(56px,9vw,120px); line-height: .92; position: relative; }
+.page-hero p { color: var(--silver); font-size: 17px; max-width: 500px; margin: 20px auto 0; position: relative; }
+
+/* ── FILTER ────────────────────────────────────────── */
+.filter-section { padding: 40px 40px 24px; }
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.filter-btn {
+  padding: 8px 20px; border: 1px solid var(--border); border-radius: 100px;
+  font-size: 13px; font-weight: 500; letter-spacing: .04em;
+  color: var(--silver); background: var(--card-bg); transition: all .2s; white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--magenta); color: var(--white); }
+.filter-btn.active { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+.results-count { font-size: 13px; color: var(--silver); margin-top: 18px; }
+.results-count strong { color: var(--white); }
+
+/* ── GRID ──────────────────────────────────────────── */
+.portfolio-section { padding: 0 40px 80px; }
+.portfolio-grid { columns: 3; column-gap: 16px; }
+.portfolio-item {
+  break-inside: avoid; margin-bottom: 16px; border-radius: 8px; overflow: hidden;
+  position: relative; cursor: pointer; background: var(--card-bg);
+  border: 1px solid var(--border); transition: transform .25s, box-shadow .25s;
+}
+.portfolio-item:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(255,45,120,.25); }
+.portfolio-item.hidden { display: none; }
+.thumb-container { position: relative; overflow: hidden; }
+.thumb-container img { width: 100%; display: block; transition: transform .5s cubic-bezier(.25,.46,.45,.94), filter .3s; filter: brightness(.85) saturate(.9); }
+.portfolio-item:hover .thumb-container img { transform: scale(1.06); filter: brightness(.55) saturate(1.1); }
+.thumb-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; transition: opacity .3s; gap: 12px; }
+.portfolio-item:hover .thumb-overlay,
+.portfolio-item:focus-visible .thumb-overlay { opacity: 1; }
+.play-btn {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(255,45,120,.9); display: flex; align-items: center; justify-content: center;
+  transform: scale(.8); transition: transform .3s; box-shadow: 0 0 0 8px rgba(255,45,120,.2);
+}
+.portfolio-item:hover .play-btn { transform: scale(1); }
+.play-btn svg { margin-left: 4px; }
+.overlay-category {
+  font-size: 11px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(255,255,255,.7); background: rgba(255,45,120,.25); padding: 4px 12px;
+  border-radius: 100px; border: 1px solid rgba(255,45,120,.4);
+}
+.card-info { padding: 16px 18px 18px; }
+.card-cat { font-size: 10px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--magenta); margin-bottom: 6px; }
+.card-title { font-size: 15px; font-weight: 500; color: var(--white); line-height: 1.4; }
+.card-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+.card-duration { font-size: 12px; color: var(--silver); display: flex; align-items: center; gap: 5px; }
+.card-tag { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--silver); border: 1px solid var(--border); padding: 2px 8px; border-radius: 100px; }
+.empty-state { display: none; text-align: center; padding: 60px 20px; color: var(--silver); font-size: 15px; }
+.empty-state.visible { display: block; }
+
+/* ── LIGHTBOX ──────────────────────────────────────── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.92); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative; width: 100%; max-width: 900px;
+  background: var(--charcoal); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,.8), 0 0 0 1px rgba(255,45,120,.2);
+  animation: lbIn .3s cubic-bezier(.25,.46,.45,.94);
+}
+@keyframes lbIn { from { opacity:0; transform:scale(.94); } to { opacity:1; transform:scale(1); } }
+.lightbox-video-wrap { position: relative; padding-top: 56.25%; background: #000; }
+.lightbox-video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.lightbox-body { padding: 24px 28px 28px; }
+.lightbox-cat { font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--magenta); margin-bottom: 8px; }
+.lightbox-title { font-family: var(--ff-display); font-size: 28px; color: var(--white); }
+.lightbox-desc { font-size: 14px; color: var(--silver); margin-top: 8px; line-height: 1.65; }
+.lightbox-close {
+  position: absolute; top: 14px; right: 16px; width: 36px; height: 36px;
+  background: rgba(0,0,0,.5); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--white); transition: background .2s; z-index: 10;
+  cursor: pointer; border: none;
+}
+.lightbox-close:hover { background: var(--magenta); }
+
+@media (max-width: 900px) {
+  .portfolio-grid { columns: 2; }
+  .filter-section, .portfolio-section { padding-left: 20px; padding-right: 20px; }
+  .page-hero { padding-left: 20px; padding-right: 20px; }
+}
+@media (max-width: 540px) { .portfolio-grid { columns: 1; } }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-logo" href="../index.html">Edit<span class="accent">Karo</span><span style="color:var(--silver);font-size:20px">.in</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="../index.html">Home</a>
+    <a href="portfolio.html" class="active">Portfolio</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">Work With Us</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <p class="section-label">Our Work</p>
+  <h1>Portfolio</h1>
+  <p>20+ projects across 9 verticals. Real work, real clients, real results.</p>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section"><div class="marquee-track" id="marquee"></div></div>
+
+<!-- FILTERS -->
+<section class="filter-section">
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="short-form">Short Form</button>
+    <button class="filter-btn" data-filter="long-form">Long Form</button>
+    <button class="filter-btn" data-filter="gaming">Gaming</button>
+    <button class="filter-btn" data-filter="football">Football Edits</button>
+    <button class="filter-btn" data-filter="ecommerce">eCommerce Ads</button>
+    <button class="filter-btn" data-filter="documentary">Documentary</button>
+    <button class="filter-btn" data-filter="color-grading">Color Grading</button>
+    <button class="filter-btn" data-filter="anime">Anime</button>
+    <button class="filter-btn" data-filter="ads">Ads</button>
+  </div>
+  <p class="results-count" id="resultsCount"></p>
+</section>
+
+<!-- GRID -->
+<section class="portfolio-section">
+  <div class="portfolio-grid" id="portfolioGrid"></div>
+  <p class="empty-state" id="emptyState">No videos in this category yet — check back soon.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="../index.html">Edit<span class="accent">Karo</span>.in</a>
+  <p class="footer-copy">&copy; 2026 EditKaro.in &middot; All rights reserved</p>
+  <div class="footer-links">
+    <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Close video">&#10005;</button>
+    <div class="lightbox-video-wrap">
+      <iframe id="lightboxIframe" src="" title="Video preview" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+    <div class="lightbox-body">
+      <p class="lightbox-cat" id="lightboxCat"></p>
+      <h3 class="lightbox-title" id="lightboxTitle"></h3>
+      <p class="lightbox-desc" id="lightboxDesc"></p>
+    </div>
+  </div>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+/*
+  NOTE: Thumbnails and YouTube IDs below are placeholders.
+  Replace `thumb` with the real video poster image URL and
+  `ytId` with the real YouTube video ID before going live.
+  Nothing else in the code needs to change.
+*/
+const videos = [
+  {id:'sf1',cat:'short-form',label:'Short Form',title:'Brand Reel — Fashion Drop',desc:'15-second vertical cut with text reveals and trending audio synced to the beat.',thumb:'https://picsum.photos/seed/ek1/500/700',ytId:'dQw4w9WgXcQ',duration:'0:15'},
+  {id:'sf2',cat:'short-form',label:'Short Form',title:'Viral Hook Reel — SaaS',desc:'Hook-driven Reel opening with a bold stat that drove 2M+ views.',thumb:'https://picsum.photos/seed/ek2/500/500',ytId:'dQw4w9WgXcQ',duration:'0:22'},
+  {id:'sf3',cat:'short-form',label:'Short Form',title:'Food Brand Shorts',desc:'Satisfying 30s cut for a cloud kitchen brand with ASMR-style audio.',thumb:'https://picsum.photos/seed/ek3/500/560',ytId:'dQw4w9WgXcQ',duration:'0:30'},
+  {id:'sf4',cat:'short-form',label:'Short Form',title:'Travel Reel — Goa Weekend',desc:'Aerial + ground cuts with transitions locked to the drop of the track.',thumb:'https://picsum.photos/seed/ek21/500/640',ytId:'dQw4w9WgXcQ',duration:'0:28'},
+  {id:'lf1',cat:'long-form',label:'Long Form',title:'Founder Story — Startup India',desc:'18-minute documentary-style deep-dive with B-roll, graphics, and narrative voiceover.',thumb:'https://picsum.photos/seed/ek4/500/300',ytId:'dQw4w9WgXcQ',duration:'18:30'},
+  {id:'lf2',cat:'long-form',label:'Long Form',title:'Product Launch Video',desc:'Full YouTube launch video with motion title, chapters, and CTA cards.',thumb:'https://picsum.photos/seed/ek5/500/340',ytId:'dQw4w9WgXcQ',duration:'12:44'},
+  {id:'lf3',cat:'long-form',label:'Long Form',title:'Podcast Edit — Season 2 Trailer',desc:'Teaser trailer cut from podcast raw footage with animated captions and music bed.',thumb:'https://picsum.photos/seed/ek22/500/420',ytId:'dQw4w9WgXcQ',duration:'2:05'},
+  {id:'gm1',cat:'gaming',label:'Gaming',title:'Valorant Montage — Agent Raze',desc:'Fast-cut frag movie synced to phonk, with speed ramps and shake effects.',thumb:'https://picsum.photos/seed/ek6/500/600',ytId:'dQw4w9WgXcQ',duration:'3:12'},
+  {id:'gm2',cat:'gaming',label:'Gaming',title:'BGMI Highlights — Clutch Plays',desc:'Battle royale highlights with HUD overlays, kill feeds, and commentary captions.',thumb:'https://picsum.photos/seed/ek7/500/320',ytId:'dQw4w9WgXcQ',duration:'5:48'},
+  {id:'gm3',cat:'gaming',label:'Gaming',title:'Free Fire Squad Reel',desc:'Squad highlights with neon-style titles and electronic music cut to beat.',thumb:'https://picsum.photos/seed/ek8/500/440',ytId:'dQw4w9WgXcQ',duration:'2:30'},
+  {id:'fb1',cat:'football',label:'Football Edits',title:'Tribute Edit — The GOAT',desc:'Cinematic player tribute with colour-separated clips, slow motion, and orchestral score.',thumb:'https://picsum.photos/seed/ek9/500/650',ytId:'dQw4w9WgXcQ',duration:'4:20'},
+  {id:'fb2',cat:'football',label:'Football Edits',title:'UCL Highlights Reel 2026',desc:'Champions League best-of montage with broadcast graphics and ambient crowd audio.',thumb:'https://picsum.photos/seed/ek10/500/300',ytId:'dQw4w9WgXcQ',duration:'6:15'},
+  {id:'fb3',cat:'football',label:'Football Edits',title:'ISL Season Recap',desc:'Indian Super League season in 90 seconds — energetic cuts, crowd energy, and clean lower-thirds.',thumb:'https://picsum.photos/seed/ek23/500/480',ytId:'dQw4w9WgXcQ',duration:'1:30'},
+  {id:'ec1',cat:'ecommerce',label:'eCommerce Ads',title:'Skincare Product Ad — D2C',desc:'UGC-style unboxing ad with on-screen text testimonials; 3.2x ROAS achieved.',thumb:'https://picsum.photos/seed/ek11/500/560',ytId:'dQw4w9WgXcQ',duration:'0:45'},
+  {id:'ec2',cat:'ecommerce',label:'eCommerce Ads',title:'Apparel Brand Meta Ad',desc:'Scroll-stopping Facebook ad with fast product reveals and a strong CTA hook.',thumb:'https://picsum.photos/seed/ek12/500/480',ytId:'dQw4w9WgXcQ',duration:'0:30'},
+  {id:'ec3',cat:'ecommerce',label:'eCommerce Ads',title:'Home Decor Reel Ad',desc:'Pinterest-inspired vertical ad with ambient sound design and product close-ups.',thumb:'https://picsum.photos/seed/ek24/500/600',ytId:'dQw4w9WgXcQ',duration:'0:20'},
+  {id:'dc1',cat:'documentary',label:'Documentary',title:'Street Food Diaries — Bengaluru',desc:'Three-part documentary series shot and edited in cinematic 4K with natural colour work.',thumb:'https://picsum.photos/seed/ek13/500/380',ytId:'dQw4w9WgXcQ',duration:'22:10'},
+  {id:'dc2',cat:'documentary',label:'Documentary',title:'The Weavers of Varanasi',desc:'Cultural mini-doc with interview overlays, archival footage, and Hindi subtitles.',thumb:'https://picsum.photos/seed/ek14/500/620',ytId:'dQw4w9WgXcQ',duration:'14:55'},
+  {id:'cg1',cat:'color-grading',label:'Color Grading',title:'Teal & Orange Cinematic Grade',desc:'Hollywood-style look with skin tone protection and a custom LUT package.',thumb:'https://picsum.photos/seed/ek15/500/360',ytId:'dQw4w9WgXcQ',duration:'Before/After'},
+  {id:'cg2',cat:'color-grading',label:'Color Grading',title:'Moody Wedding Film Grade',desc:'Warm golden-hour grade balanced with cool shadows for a romantic feel.',thumb:'https://picsum.photos/seed/ek16/500/500',ytId:'dQw4w9WgXcQ',duration:'Before/After'},
+  {id:'an1',cat:'anime',label:'Anime',title:'AMV — Demon Slayer x Phonk',desc:'Frame-perfect AMV with masking effects, speed ramps, and glitch transitions.',thumb:'https://picsum.photos/seed/ek17/500/660',ytId:'dQw4w9WgXcQ',duration:'3:40'},
+  {id:'an2',cat:'anime',label:'Anime',title:'One Piece — Gear 5 Tribute Edit',desc:'Dynamic clip selection with particle effects and synced audio from the soundtrack.',thumb:'https://picsum.photos/seed/ek18/500/380',ytId:'dQw4w9WgXcQ',duration:'2:55'},
+  {id:'ad1',cat:'ads',label:'Ads',title:'EdTech YouTube Pre-Roll',desc:'Non-skippable 15s ad with a problem-hook, solution reveal, and branded outro.',thumb:'https://picsum.photos/seed/ek19/500/400',ytId:'dQw4w9WgXcQ',duration:'0:15'},
+  {id:'ad2',cat:'ads',label:'Ads',title:'Fintech Brand Promo',desc:'60-second explainer ad mixing screen recordings, motion graphics, and talking head.',thumb:'https://picsum.photos/seed/ek20/500/480',ytId:'dQw4w9WgXcQ',duration:'1:00'},
+];
+
+// ── Render grid ──────────────────────────────────────────────────────────────
+const grid     = document.getElementById('portfolioGrid');
+const fragment = document.createDocumentFragment();
+videos.forEach(v => {
+  const item = document.createElement('div');
+  item.className = 'portfolio-item';
+  item.dataset.cat = v.cat;
+  item.tabIndex = 0;
+  item.setAttribute('role','button');
+  item.setAttribute('aria-label',`Play ${v.title}`);
+  item.innerHTML = `
+    <div class="thumb-container">
+      <img src="${v.thumb}" alt="${v.title}" loading="lazy" />
+      <div class="thumb-overlay">
+        <div class="play-btn">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="white"><polygon points="6,3 18,10 6,17"/></svg>
+        </div>
+        <span class="overlay-category">${v.label}</span>
+      </div>
+    </div>
+    <div class="card-info">
+      <p class="card-cat">${v.label}</p>
+      <p class="card-title">${v.title}</p>
+      <div class="card-meta">
+        <span class="card-duration">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>
+          ${v.duration}
+        </span>
+        <span class="card-tag">${v.cat}</span>
+      </div>
+    </div>`;
+  item.addEventListener('click', () => openLightbox(v));
+  item.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLightbox(v); } });
+  fragment.appendChild(item);
+});
+grid.appendChild(fragment);
+
+// ── Filter ───────────────────────────────────────────────────────────────────
+const filterBar    = document.getElementById('filterBar');
+const resultsCount = document.getElementById('resultsCount');
+const emptyState   = document.getElementById('emptyState');
+const allItems = () => Array.from(document.querySelectorAll('.portfolio-item'));
+
+function applyFilter(filter) {
+  let visible = 0;
+  allItems().forEach(item => {
+    const show = filter === 'all' || item.dataset.cat === filter;
+    item.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  resultsCount.innerHTML = filter === 'all'
+    ? `Showing <strong>${visible}</strong> of <strong>${videos.length}</strong> projects`
+    : `Showing <strong>${visible}</strong> project${visible !== 1 ? 's' : ''} in <strong>${filter.replace(/-/g,' ')}</strong>`;
+  emptyState.classList.toggle('visible', visible === 0);
+}
+
+filterBar.addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilter(btn.dataset.filter);
+});
+applyFilter('all');
+
+// URL param filter e.g. portfolio.html?cat=gaming
+const urlCat = new URLSearchParams(location.search).get('cat');
+if (urlCat) {
+  const btn = filterBar.querySelector(`[data-filter="${urlCat}"]`);
+  if (btn) { document.querySelector('.filter-btn.active').classList.remove('active'); btn.classList.add('active'); applyFilter(urlCat); }
+}
+
+// ── Lightbox ─────────────────────────────────────────────────────────────────
+const lb       = document.getElementById('lightbox');
+const lbIframe = document.getElementById('lightboxIframe');
+let lastFocused;
+
+function openLightbox(v) {
+  lastFocused = document.activeElement;
+  lbIframe.src = `https://www.youtube.com/embed/${v.ytId}?autoplay=1&rel=0`;
+  document.getElementById('lightboxTitle').textContent = v.title;
+  document.getElementById('lightboxCat').textContent   = v.label;
+  document.getElementById('lightboxDesc').textContent  = v.desc;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('lightboxClose').focus();
+}
+function closeLightbox() {
+  lb.classList.remove('open');
+  lbIframe.src = '';
+  document.body.style.overflow = '';
+  if (lastFocused) lastFocused.focus();
+}
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox(); });
+
+// Marquee
+buildMarquee('marquee', ['SHORT FORM','LONG FORM','GAMING','FOOTBALL EDITS','ECOMMERCE ADS','DOCUMENTARY','COLOR GRADING','ANIME','ADS']);
+</script>
+</body>
+</html>
