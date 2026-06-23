@@ -150,4 +150,4 @@ All thumbnails use [picsum.photos](https://picsum.photos) seeded URLs and all Yo
 
 ---
 
-*Submitted by: [Your Name] | Registration No: [Your Reg No] | VaultofCodes Major Project*
+*Submitted by: Thanmai | VaultofCodes Major Project*
